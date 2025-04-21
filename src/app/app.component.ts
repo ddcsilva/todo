@@ -30,6 +30,6 @@ export class AppComponent {
 
   // Vai ser usada pra exibir as tarefas (será útil na tabela)
   get tarefas(): readonly Tarefa[] {
-    return this.lista.itens;
+    return this.lista.itens.filter((tarefa) => !tarefa.concluida);
   }
 }

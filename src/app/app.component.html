@@ -33,7 +33,9 @@
     <ng-container matColumnDef="concluida">
       <th mat-header-cell *matHeaderCellDef>Feita</th>
       <td mat-cell *matCellDef="let tarefa">
-        {{ tarefa.concluida ? "✅" : "❌" }}
+        <mat-checkbox [(ngModel)]="tarefa.concluida" color="primary">
+          {{ tarefa.concluida }}
+        </mat-checkbox>
       </td>
     </ng-container>
 
