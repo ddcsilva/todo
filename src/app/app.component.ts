@@ -15,6 +15,9 @@ export class AppComponent {
     new Tarefa('Dominar o Pro Angular 16'),
   ]);
 
+  // Definindo as colunas que serão exibidas na tabela
+  colunas: string[] = ['indice', 'descricao', 'concluida'];
+
   // Exibe o nome do usuário
   get nomeUsuario(): string {
     return this.lista.usuario;

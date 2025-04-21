@@ -1,4 +1,40 @@
-<h3>
+<mat-toolbar color="primary">
+  <mat-icon>check</mat-icon>
   {{ nomeUsuario }} - Lista de Tarefas
-  <h6>{{ totalPendentes }} pendentes</h6>
-</h3>
+
+  <span class="espacador"></span>
+
+  <button mat-icon-button>
+    <mat-icon matBadge="{{ totalPendentes }}" matBadgeColor="warn">
+      assignment_turned_in
+    </mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="tabela-container">
+  <table mat-table [dataSource]="tarefas" class="mat-elevation-z3 fullWidth">
+    <!-- Coluna: Índice -->
+    <ng-container matColumnDef="indice">
+      <th mat-header-cell *matHeaderCellDef>#</th>
+      <td mat-cell *matCellDef="let i = index">{{ i + 1 }}</td>
+    </ng-container>
+
+    <!-- Coluna: Descrição -->
+    <ng-container matColumnDef="descricao">
+      <th mat-header-cell *matHeaderCellDef>Tarefa</th>
+      <td mat-cell *matCellDef="let tarefa">{{ tarefa.descricao }}</td>
+    </ng-container>
+
+    <!-- Coluna: Concluída -->
+    <ng-container matColumnDef="concluida">
+      <th mat-header-cell *matHeaderCellDef>Feita</th>
+      <td mat-cell *matCellDef="let tarefa">
+        {{ tarefa.concluida ? "✅" : "❌" }}
+      </td>
+    </ng-container>
+
+    <!-- Cabeçalho e Linhas -->
+    <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+    <tr mat-row *matRowDef="let linha; columns: colunas"></tr>
+  </table>
+</div>

@@ -1,0 +1,11 @@
+.espacador {
+  flex: 1 1 auto;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.tabela-container {
+  padding: 1rem;
+}
