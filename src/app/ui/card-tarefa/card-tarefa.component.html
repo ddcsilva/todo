@@ -1,0 +1,11 @@
+<div class="card">
+  <input
+    type="checkbox"
+    [checked]="tarefa?.concluida"
+    (change)="alternar.emit()"
+  />
+  <span [class.concluida]="tarefa?.concluida">
+    {{ tarefa?.titulo }}
+  </span>
+  <button (click)="remover.emit()">Remover</button>
+</div>
