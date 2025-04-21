@@ -1,0 +1,32 @@
+import { Component } from '@angular/core';
+import { ListaTarefas } from './lista-tarefas.model';
+import { Tarefa } from './tarefa.model';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  // Instanciando a lista com algumas tarefas de exemplo
+  private lista = new ListaTarefas('Danilo', [
+    new Tarefa('Estudar Angular', true),
+    new Tarefa('Tomar café'),
+    new Tarefa('Dominar o Pro Angular 16'),
+  ]);
+
+  // Exibe o nome do usuário
+  get nomeUsuario(): string {
+    return this.lista.usuario;
+  }
+
+  // Exibe o número de tarefas pendentes
+  get totalPendentes(): number {
+    return this.lista.itens.filter((tarefa) => !tarefa.concluida).length;
+  }
+
+  // Vai ser usada pra exibir as tarefas (será útil na tabela)
+  get tarefas(): readonly Tarefa[] {
+    return this.lista.itens;
+  }
+}
