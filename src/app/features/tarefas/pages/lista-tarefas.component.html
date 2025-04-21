@@ -1,18 +1,17 @@
-<h2>Lista de Tarefas</h2>
+<mat-card class="form-card">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Nova Tarefa</mat-label>
+    <input matInput [(ngModel)]="novaTarefa" />
+  </mat-form-field>
 
-<input [(ngModel)]="novaTarefa" placeholder="Nova tarefa" />
-<button (click)="adicionarTarefa()">Adicionar</button>
+  <button mat-raised-button color="primary" (click)="adicionarTarefa()">
+    Adicionar
+  </button>
+</mat-card>
 
-<ul>
-  <li *ngFor="let tarefa of tarefas()">
-    <input
-      type="checkbox"
-      [checked]="tarefa.concluida"
-      (change)="alternarStatus(tarefa)"
-    />
-    <span [style.text-decoration]="tarefa.concluida ? 'line-through' : 'none'">
-      {{ tarefa.titulo }}
-    </span>
-    <button (click)="removerTarefa(tarefa)">Remover</button>
-  </li>
-</ul>
+<app-card-tarefa
+  *ngFor="let tarefa of tarefas()"
+  [tarefa]="tarefa"
+  (alternar)="alternarStatus(tarefa)"
+  (remover)="removerTarefa(tarefa)"
+></app-card-tarefa>

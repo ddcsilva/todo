@@ -3,11 +3,24 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tarefa } from '../model/tarefa.model';
 import { TarefasService } from '../data-access/tarefas.service';
+import { CardTarefaComponent } from 'src/app/ui/card-tarefa/card-tarefa.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   standalone: true,
   selector: 'app-lista-tarefas',
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    CardTarefaComponent,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+  ],
   templateUrl: './lista-tarefas.component.html',
 })
 export class ListaTarefasComponent {

@@ -1,13 +1,16 @@
 .card {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 8px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  justify-content: space-between;
+  margin: 8px 0;
+}
+
+.titulo {
+  flex: 1;
+  margin: 0 16px;
 }
 
 .concluida {
   text-decoration: line-through;
+  color: gray;
 }

@@ -1,11 +1,12 @@
-<div class="card">
-  <input
-    type="checkbox"
-    [checked]="tarefa?.concluida"
-    (change)="alternar.emit()"
-  />
-  <span [class.concluida]="tarefa?.concluida">
-    {{ tarefa?.titulo }}
+<mat-card class="card">
+  <mat-checkbox [checked]="tarefa.concluida" (change)="alternar.emit()">
+  </mat-checkbox>
+
+  <span [class.concluida]="tarefa.concluida" class="titulo">
+    {{ tarefa.titulo }}
   </span>
-  <button (click)="remover.emit()">Remover</button>
-</div>
+
+  <button mat-icon-button color="warn" (click)="remover.emit()">
+    <mat-icon>delete</mat-icon>
+  </button>
+</mat-card>
