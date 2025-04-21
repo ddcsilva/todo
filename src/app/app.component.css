@@ -2,10 +2,10 @@
   flex: 1 1 auto;
 }
 
-.fullWidth {
-  width: 100%;
+.tabela-container {
+  padding: 15px;
 }
 
-.tabela-container {
-  padding: 1rem;
+.fullWidth {
+  width: 100%;
 }
