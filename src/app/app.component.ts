@@ -15,6 +15,8 @@ export class AppComponent {
     new Tarefa('Dominar o Pro Angular 16'),
   ]);
 
+  mostrarConcluidas: boolean = false;
+
   // Definindo as colunas que serão exibidas na tabela
   colunas: string[] = ['indice', 'descricao', 'concluida'];
 
@@ -30,6 +32,14 @@ export class AppComponent {
 
   // Vai ser usada pra exibir as tarefas (será útil na tabela)
   get tarefas(): readonly Tarefa[] {
-    return this.lista.itens.filter((tarefa) => !tarefa.concluida);
+    return this.lista.itens.filter(
+      (tarefa) => this.mostrarConcluidas || !tarefa.concluida
+    );
+  }
+
+  adicionarTarefa(descricao: string) {
+    if (descricao.trim() !== '') {
+      this.lista.adicionar(descricao);
+    }
   }
 }

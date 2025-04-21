@@ -14,6 +14,24 @@
   </button>
 </mat-toolbar>
 
+<!-- Campo de entrada para nova tarefa -->
+<div class="input-container">
+  <mat-form-field class="fullWidth">
+    <mat-label>Nova Tarefa</mat-label>
+    <input matInput placeholder="Descreva a tarefa" #campoTarefa />
+
+    <button
+      matSuffix
+      mat-raised-button
+      color="accent"
+      class="botao-adicionar"
+      (click)="adicionarTarefa(campoTarefa.value); campoTarefa.value = ''"
+    >
+      Adicionar
+    </button>
+  </mat-form-field>
+</div>
+
 <!-- Container da tabela com padding -->
 <div class="tabela-container">
   <table mat-table [dataSource]="tarefas" class="mat-elevation-z3 fullWidth">
@@ -34,7 +52,6 @@
       <th mat-header-cell *matHeaderCellDef>Feita</th>
       <td mat-cell *matCellDef="let tarefa">
         <mat-checkbox [(ngModel)]="tarefa.concluida" color="primary">
-          {{ tarefa.concluida }}
         </mat-checkbox>
       </td>
     </ng-container>
@@ -43,4 +60,12 @@
     <tr mat-header-row *matHeaderRowDef="colunas"></tr>
     <tr mat-row *matRowDef="let linha; columns: colunas"></tr>
   </table>
+</div>
+
+<div class="toggle-container">
+  <span class="espacador"></span>
+  <mat-slide-toggle [(ngModel)]="mostrarConcluidas">
+    Mostrar Tarefas Concluídas
+  </mat-slide-toggle>
+  <span class="espacador"></span>
 </div>
