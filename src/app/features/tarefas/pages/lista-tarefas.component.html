@@ -48,8 +48,20 @@
 
         <div class="empty-state" *ngIf="tarefasFiltradas().length === 0">
           <mat-icon>check_circle_outline</mat-icon>
-          <p>{{ mostrarConcluidas() ? 'Nenhuma tarefa encontrada' : 'Nenhuma tarefa pendente' }}</p>
-          <p class="subtitle">{{ mostrarConcluidas() ? 'Adicione uma nova tarefa para começar' : 'Todas as tarefas foram concluídas!' }}</p>
+          <p>
+            {{
+              mostrarConcluidas()
+                ? "Nenhuma tarefa encontrada"
+                : "Nenhuma tarefa pendente"
+            }}
+          </p>
+          <p class="subtitle">
+            {{
+              mostrarConcluidas()
+                ? "Adicione uma nova tarefa para começar"
+                : "Todas as tarefas foram concluídas!"
+            }}
+          </p>
         </div>
       </div>
     </mat-card-content>

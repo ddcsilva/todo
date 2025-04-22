@@ -1,13 +1,21 @@
-.lista-tarefas-container {
+.lista-tarefas-card {
+  width: 100%;
+  max-width: none;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
   padding: var(--spacing-md);
+  background-color: var(--bg-primary);
 }
 
 .lista-tarefas-card {
-  max-width: 800px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: none;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-md);
   background-color: var(--bg-primary);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
 }
 
 mat-card-header {
@@ -71,7 +79,7 @@ mat-card-header {
   .lista-tarefas-container {
     padding: var(--spacing-sm);
   }
-  
+
   .lista-tarefas-card {
     border-radius: var(--radius-md);
   }
