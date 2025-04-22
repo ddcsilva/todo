@@ -1,12 +1,13 @@
-<mat-card class="card-tarefa" [ngClass]="{ concluida: tarefa.concluida }">
-  <div class="conteudo">
-    <mat-checkbox [checked]="tarefa.concluida" (change)="alternar.emit()">
-    </mat-checkbox>
+<div [ngClass]="{ concluida: tarefa.concluida }">
+  <div>
+    <input
+      type="checkbox"
+      [checked]="tarefa.concluida"
+      (change)="alternar.emit()"
+    />
 
     <p>{{ tarefa.titulo }}</p>
 
-    <button mat-icon-button class="btn-lixeira" (click)="remover.emit()">
-      <mat-icon>delete_outline</mat-icon>
-    </button>
+    <button (click)="remover.emit()" title="Remover tarefa">🗑️</button>
   </div>
-</mat-card>
+</div>
