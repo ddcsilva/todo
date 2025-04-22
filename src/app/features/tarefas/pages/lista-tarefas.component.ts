@@ -22,6 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
   ],
   templateUrl: './lista-tarefas.component.html',
+  styleUrls: ['./lista-tarefas.component.css'],
 })
 export class ListaTarefasComponent {
   novaTarefa = '';

@@ -1,17 +1,21 @@
-<mat-card class="form-card">
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Nova Tarefa</mat-label>
-    <input matInput [(ngModel)]="novaTarefa" />
-  </mat-form-field>
+<section class="pagina-tarefas">
+  <h1>Minhas Tarefas</h1>
 
-  <button mat-raised-button color="primary" (click)="adicionarTarefa()">
-    Adicionar
-  </button>
-</mat-card>
+  <mat-card class="form-card">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Nova Tarefa</mat-label>
+      <input matInput [(ngModel)]="novaTarefa" />
+    </mat-form-field>
 
-<app-card-tarefa
-  *ngFor="let tarefa of tarefas()"
-  [tarefa]="tarefa"
-  (alternar)="alternarStatus(tarefa)"
-  (remover)="removerTarefa(tarefa)"
-></app-card-tarefa>
+    <button mat-raised-button color="primary" (click)="adicionarTarefa()">
+      Adicionar
+    </button>
+  </mat-card>
+
+  <app-card-tarefa
+    *ngFor="let tarefa of tarefas()"
+    [tarefa]="tarefa"
+    (alternar)="alternarStatus(tarefa)"
+    (remover)="removerTarefa(tarefa)"
+  ></app-card-tarefa>
+</section>
