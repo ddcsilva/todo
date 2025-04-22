@@ -9,6 +9,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { signal, computed } from '@angular/core';
+import { ConfirmacaoDialogComponent } from 'src/app/ui/confirmacao-dialog/confirmacao-dialog.component';
 
 @Component({
   standalone: true,
@@ -22,36 +27,70 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatSlideToggleModule,
+    MatDialogModule,
   ],
   templateUrl: './lista-tarefas.component.html',
   styleUrls: ['./lista-tarefas.component.css'],
+  animations: [
+    trigger('tarefaAnimation', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-20px)' }),
+        animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ]),
+      transition(':leave', [
+        animate('200ms ease-in', style({ opacity: 0, transform: 'translateY(-20px)' }))
+      ])
+    ])
+  ]
 })
 export class ListaTarefasComponent {
   novaTarefa = '';
+  mostrarConcluidas = signal(false);
+  
+  tarefasFiltradas = computed(() => {
+    const tarefas = this.tarefasService.obterTarefas()();
+    return tarefas.filter(tarefa => this.mostrarConcluidas() || !tarefa.concluida);
+  });
 
-  constructor(private tarefasService: TarefasService) {}
+  constructor(
+    private tarefasService: TarefasService,
+    private dialog: MatDialog
+  ) {}
 
-  get tarefas() {
-    return this.tarefasService.obterTarefas();
-  }
-
-  adicionarTarefa() {
+  async adicionarTarefa() {
     if (this.novaTarefa.trim()) {
       const nova: Tarefa = {
-        id: Date.now(),
+        id: Date.now().toString(),
         titulo: this.novaTarefa.trim(),
         concluida: false,
       };
-      this.tarefasService.adicionar(nova);
+      await this.tarefasService.adicionar(nova);
       this.novaTarefa = '';
     }
   }
 
-  alternarStatus(tarefa: Tarefa) {
-    this.tarefasService.alternarStatus(tarefa.id);
+  async alternarStatus(tarefa: Tarefa) {
+    await this.tarefasService.alternarStatus(tarefa.id);
   }
 
-  removerTarefa(tarefa: Tarefa) {
-    this.tarefasService.remover(tarefa.id);
+  async removerTarefa(tarefa: Tarefa) {
+    const dialogRef = this.dialog.open(ConfirmacaoDialogComponent, {
+      width: '300px',
+      data: { titulo: tarefa.titulo }
+    });
+
+    const result = await dialogRef.afterClosed().toPromise();
+    if (result) {
+      await this.tarefasService.remover(tarefa.id);
+    }
+  }
+
+  toggleMostrarConcluidas() {
+    this.mostrarConcluidas.update(v => !v);
+  }
+
+  get tarefasPendentes() {
+    return this.tarefasService.obterTarefas()().filter(t => !t.concluida).length;
   }
 }

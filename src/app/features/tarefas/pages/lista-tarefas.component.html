@@ -14,7 +14,6 @@
             [(ngModel)]="novaTarefa"
             name="novaTarefa"
             placeholder="Digite uma nova tarefa"
-            required
           />
           <button
             matSuffix
@@ -27,18 +26,30 @@
         </mat-form-field>
       </form>
 
+      <div class="tarefas-header">
+        <h3>Lista de Tarefas</h3>
+        <mat-slide-toggle
+          [checked]="mostrarConcluidas()"
+          (change)="toggleMostrarConcluidas()"
+          color="primary"
+        >
+          Mostrar concluídas
+        </mat-slide-toggle>
+      </div>
+
       <div class="tarefas-list">
         <app-card-tarefa
-          *ngFor="let tarefa of tarefas()"
+          *ngFor="let tarefa of tarefasFiltradas()"
           [tarefa]="tarefa"
           (alternar)="alternarStatus(tarefa)"
           (remover)="removerTarefa(tarefa)"
+          @tarefaAnimation
         ></app-card-tarefa>
 
-        <div class="empty-state" *ngIf="tarefas().length === 0">
+        <div class="empty-state" *ngIf="tarefasFiltradas().length === 0">
           <mat-icon>check_circle_outline</mat-icon>
-          <p>Nenhuma tarefa cadastrada</p>
-          <p class="subtitle">Adicione uma nova tarefa para começar</p>
+          <p>{{ mostrarConcluidas() ? 'Nenhuma tarefa encontrada' : 'Nenhuma tarefa pendente' }}</p>
+          <p class="subtitle">{{ mostrarConcluidas() ? 'Adicione uma nova tarefa para começar' : 'Todas as tarefas foram concluídas!' }}</p>
         </div>
       </div>
     </mat-card-content>

@@ -22,6 +22,21 @@ mat-card-header {
   width: 100%;
 }
 
+.tarefas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tarefas-header h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+}
+
 .tarefas-list {
   display: flex;
   flex-direction: column;
@@ -59,5 +74,11 @@ mat-card-header {
   
   .lista-tarefas-card {
     border-radius: var(--radius-md);
+  }
+
+  .tarefas-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
   }
 }
