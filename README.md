@@ -1,27 +1,108 @@
-# Todo
+# ✅ Lista de Tarefas - Angular Enterprise Architecture
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
+Este projeto é uma aplicação de lista de tarefas construída com **Angular 17+**, utilizando os princípios de arquitetura empresarial propostos por [Tomas Trajan](https://github.com/tomastrajan) no livro **Angular Enterprise Architecture**.
 
-## Development server
+> 🔥 100% baseada em componentes standalone, Signals e boa arquitetura frontend moderna.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+## 📐 Estrutura de Pastas (Enterprise)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+A estrutura do projeto segue o padrão recomendado pelo livro:
 
-## Build
+```
+src/app/
+├── core/       # Serviços, providers e lógica compartilhada da aplicação
+├── layout/     # Shell principal, header e footer
+├── features/   # Domínio do negócio (tarefas)
+├── ui/         # Componentes visuais burros e reutilizáveis
+├── shared/     # Diretivas, pipes e helpers utilitários
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
+## ✨ Funcionalidades
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- ✅ Criar tarefas
+- 🔁 Alternar status (pendente/concluída)
+- 🗑️ Remover tarefas com confirmação
+- 🔍 Filtrar tarefas concluídas
+- 💾 Integração com JSON Server simulando backend REST
+- ⚡ Implementado com **Signals**, **computed**, **ChangeDetectionStrategy.OnPush** e **lazy loading**
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 🧱 Arquitetura de Estado
 
-## Further help
+O estado das tarefas é controlado por um **Store local** (com Signals), isolado do serviço HTTP:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+TarefasService → comunica com a API
+TarefasStore   → controla o estado com signal<Tarefa[]>
+Componentes    → reagem ao state via computed()
+```
+
+---
+
+## 🛡️ Garantia de Arquitetura
+
+Este projeto usa o plugin:
+
+```
+eslint-plugin-boundaries
+```
+
+Para garantir que:
+- 🧩 UI não dependa de features
+- 🔁 Core nunca importe features
+- 📦 Layout não quebre a modularidade
+
+---
+
+## 🎨 UI/UX Inspirado em Apps Reais
+
+- Visual limpo, leve e responsivo
+- Sem exageros visuais — estilo moderno (ex: Todoist, Trello)
+- Acessibilidade e responsividade testada em mobile
+- Feedback visual em interações (hover, toggles, estados vazios)
+
+---
+
+## 🚀 Tecnologias
+
+- Angular 17+
+- Angular Material 18
+- Signals API (`signal`, `computed`)
+- ESLint + eslint-plugin-boundaries
+- JSON Server (simulação backend)
+- Standalone Components
+- Animations
+
+---
+
+## 📦 Para rodar localmente
+
+```bash
+# Instale as dependências
+npm install
+
+# Suba o json-server
+npx json-server --watch db.json --port 3000
+
+# Rode o app
+ng serve
+```
+
+---
+
+## 🧑‍💻 Autor
+
+Feito com 💖 por [Danilo Silva](https://github.com/seuusuario)
+
+---
+
+## 📚 Baseado em:
+
+📘 Livro: [Angular Enterprise Architecture](https://angular-enterprise-architecture.dev/)  
+Autor: Tomas Trajan  
+Versão aplicada: 2.4.0
