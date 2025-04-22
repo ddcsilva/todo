@@ -33,6 +33,7 @@
     "@angular/compiler-cli": "^17.3.12",
     "@types/jasmine": "~4.3.0",
     "concurrently": "^9.1.2",
+    "eslint-plugin-boundaries": "^5.0.1",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

@@ -1,0 +1,33 @@
+{
+  "plugins": ["boundaries"],
+  "extends": ["plugin:boundaries/recommended"],
+  "rules": {
+    "boundaries/element-types": [
+      "error",
+      {
+        "default": "disallow",
+        "rules": [
+          { "type": "core", "pattern": "src/app/core/*" },
+          { "type": "layout", "pattern": "src/app/layout/*" },
+          { "type": "features", "pattern": "src/app/features/*" },
+          { "type": "ui", "pattern": "src/app/ui/*" },
+          { "type": "shared", "pattern": "src/app/shared/*" }
+        ]
+      }
+    ],
+    "boundaries/allowed-types": [
+      "error",
+      {
+        "core": [],
+        "layout": ["core", "shared", "ui"],
+        "features": ["core", "shared", "ui"],
+        "ui": ["shared"],
+        "shared": ["core"]
+      }
+    ]
+  },
+  "settings": {
+    "boundaries/include": ["src/app"],
+    "boundaries/types": ["core", "layout", "features", "ui", "shared"]
+  }
+}

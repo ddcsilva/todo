@@ -1,49 +1,48 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Tarefa } from '../model/tarefa.model';
 import { firstValueFrom } from 'rxjs';
+import { TarefasStore } from './tarefas.store';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TarefasService {
   private apiUrl = 'http://localhost:3000/tarefas';
-  private tarefas = signal<Tarefa[]>([]);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private store: TarefasStore) {
     this.carregarTarefas();
   }
 
   async carregarTarefas() {
     const tarefas = await firstValueFrom(this.http.get<Tarefa[]>(this.apiUrl));
-    this.tarefas.set(tarefas);
-  }
-
-  obterTarefas() {
-    return this.tarefas;
+    this.store.atualizar(tarefas);
   }
 
   async adicionar(tarefa: Tarefa) {
-    const novaTarefa = await firstValueFrom(this.http.post<Tarefa>(this.apiUrl, {
-      ...tarefa,
-      id: Date.now().toString() // Garantir que o ID seja string
-    }));
-    this.tarefas.update(tarefas => [...tarefas, novaTarefa]);
+    const novaTarefa = await firstValueFrom(
+      this.http.post<Tarefa>(this.apiUrl, {
+        ...tarefa,
+        id: Date.now().toString(),
+      })
+    );
+    this.store.adicionar(novaTarefa);
   }
 
   async alternarStatus(id: string) {
-    const tarefa = this.tarefas().find(t => t.id === id);
+    const tarefas = this.store.tarefas();
+    const tarefa = tarefas.find((t) => t.id === id);
     if (tarefa) {
       const tarefaAtualizada = { ...tarefa, concluida: !tarefa.concluida };
-      await firstValueFrom(this.http.put<Tarefa>(`${this.apiUrl}/${id}`, tarefaAtualizada));
-      this.tarefas.update(tarefas =>
-        tarefas.map(t => t.id === id ? tarefaAtualizada : t)
+      await firstValueFrom(
+        this.http.put<Tarefa>(`${this.apiUrl}/${id}`, tarefaAtualizada)
       );
+      this.store.alternarStatus(id);
     }
   }
 
   async remover(id: string) {
     await firstValueFrom(this.http.delete(`${this.apiUrl}/${id}`));
-    this.tarefas.update(tarefas => tarefas.filter(t => t.id !== id));
+    this.store.remover(id);
   }
 }

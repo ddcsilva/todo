@@ -1,6 +1,10 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialogModule,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
 interface DialogData {
@@ -11,21 +15,9 @@ interface DialogData {
   selector: 'app-confirmacao-dialog',
   standalone: true,
   imports: [CommonModule, MatDialogModule, MatButtonModule],
-  template: `
-    <h2 mat-dialog-title>Confirmar exclusão</h2>
-    <mat-dialog-content>
-      Deseja realmente excluir a tarefa "{{ data.titulo }}"?
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-button (click)="cancelar()">Cancelar</button>
-      <button mat-button color="warn" (click)="confirmar()">Excluir</button>
-    </mat-dialog-actions>
-  `,
-  styles: [`
-    mat-dialog-content {
-      margin: 20px 0;
-    }
-  `]
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './confirmacao-dialog.component.html',
+  styleUrls: ['./confirmacao-dialog.component.css'],
 })
 export class ConfirmacaoDialogComponent {
   constructor(
@@ -40,4 +32,4 @@ export class ConfirmacaoDialogComponent {
   confirmar(): void {
     this.dialogRef.close(true);
   }
-} 
+}

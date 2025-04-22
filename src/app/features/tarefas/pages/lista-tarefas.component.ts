@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tarefa } from '../model/tarefa.model';
 import { TarefasService } from '../data-access/tarefas.service';
+import { TarefasStore } from '../data-access/tarefas.store';
 import { CardTarefaComponent } from 'src/app/ui/card-tarefa/card-tarefa.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -36,25 +37,35 @@ import { ConfirmacaoDialogComponent } from 'src/app/ui/confirmacao-dialog/confir
     trigger('tarefaAnimation', [
       transition(':enter', [
         style({ opacity: 0, transform: 'translateY(-20px)' }),
-        animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+        animate(
+          '200ms ease-out',
+          style({ opacity: 1, transform: 'translateY(0)' })
+        ),
       ]),
       transition(':leave', [
-        animate('200ms ease-in', style({ opacity: 0, transform: 'translateY(-20px)' }))
-      ])
-    ])
-  ]
+        animate(
+          '200ms ease-in',
+          style({ opacity: 0, transform: 'translateY(-20px)' })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class ListaTarefasComponent {
   novaTarefa = '';
   mostrarConcluidas = signal(false);
-  
+
+  // Computed usando o store para acessar o estado
   tarefasFiltradas = computed(() => {
-    const tarefas = this.tarefasService.obterTarefas()();
-    return tarefas.filter(tarefa => this.mostrarConcluidas() || !tarefa.concluida);
+    const tarefas = this.tarefasStore.tarefas();
+    return tarefas.filter(
+      (tarefa) => this.mostrarConcluidas() || !tarefa.concluida
+    );
   });
 
   constructor(
     private tarefasService: TarefasService,
+    private tarefasStore: TarefasStore,
     private dialog: MatDialog
   ) {}
 
@@ -66,6 +77,7 @@ export class ListaTarefasComponent {
         concluida: false,
       };
       await this.tarefasService.adicionar(nova);
+      // O service já atualiza o store — não precisa mexer aqui
       this.novaTarefa = '';
     }
   }
@@ -77,7 +89,7 @@ export class ListaTarefasComponent {
   async removerTarefa(tarefa: Tarefa) {
     const dialogRef = this.dialog.open(ConfirmacaoDialogComponent, {
       width: '300px',
-      data: { titulo: tarefa.titulo }
+      data: { titulo: tarefa.titulo },
     });
 
     const result = await dialogRef.afterClosed().toPromise();
@@ -87,10 +99,10 @@ export class ListaTarefasComponent {
   }
 
   toggleMostrarConcluidas() {
-    this.mostrarConcluidas.update(v => !v);
+    this.mostrarConcluidas.update((v) => !v);
   }
 
   get tarefasPendentes() {
-    return this.tarefasService.obterTarefas()().filter(t => !t.concluida).length;
+    return this.tarefasStore.tarefasPendentes();
   }
 }
