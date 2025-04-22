@@ -1,16 +1,46 @@
-<section>
-  <h1>Minhas Tarefas</h1>
+<section class="lista-tarefas-container">
+  <mat-card class="lista-tarefas-card">
+    <mat-card-header>
+      <mat-card-title>Minhas Tarefas</mat-card-title>
+      <mat-card-subtitle>Organize suas atividades diárias</mat-card-subtitle>
+    </mat-card-header>
 
-  <div>
-    <label>Nova Tarefa</label>
-    <input [(ngModel)]="novaTarefa" />
-    <button (click)="adicionarTarefa()">Adicionar</button>
-  </div>
+    <mat-card-content>
+      <form class="nova-tarefa-form" (ngSubmit)="adicionarTarefa()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nova Tarefa</mat-label>
+          <input
+            matInput
+            [(ngModel)]="novaTarefa"
+            name="novaTarefa"
+            placeholder="Digite uma nova tarefa"
+            required
+          />
+          <button
+            matSuffix
+            mat-icon-button
+            type="submit"
+            [disabled]="!novaTarefa.trim()"
+          >
+            <mat-icon>add_circle</mat-icon>
+          </button>
+        </mat-form-field>
+      </form>
 
-  <app-card-tarefa
-    *ngFor="let tarefa of tarefas()"
-    [tarefa]="tarefa"
-    (alternar)="alternarStatus(tarefa)"
-    (remover)="removerTarefa(tarefa)"
-  ></app-card-tarefa>
+      <div class="tarefas-list">
+        <app-card-tarefa
+          *ngFor="let tarefa of tarefas()"
+          [tarefa]="tarefa"
+          (alternar)="alternarStatus(tarefa)"
+          (remover)="removerTarefa(tarefa)"
+        ></app-card-tarefa>
+
+        <div class="empty-state" *ngIf="tarefas().length === 0">
+          <mat-icon>check_circle_outline</mat-icon>
+          <p>Nenhuma tarefa cadastrada</p>
+          <p class="subtitle">Adicione uma nova tarefa para começar</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </section>
