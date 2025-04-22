@@ -10,5 +10,6 @@
   display: flex;
   justify-content: center;
   align-items: start;
-  padding: 2rem;
+  padding: 3rem 1rem;
+  background: #f0f2f5;
 }
